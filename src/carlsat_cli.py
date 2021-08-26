@@ -7,6 +7,20 @@ def main():
     """
     pass
 
+#CarlSAT Output Parser
+def parseCost(text):
+    textList = text.split("\n")
+
+    stringList = textList[-2].split()
+
+    time = float(stringList[-2])
+
+    stringList = textList[-3].split()
+
+    score = float(stringList[-1])
+
+    return score + time
+
 if __name__ == '__main__':
     try:
         main()
