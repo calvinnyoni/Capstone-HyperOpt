@@ -1,2 +1,2 @@
 service mysql start
-python3 ./carlsat_cli.py
+python3 db_test.py

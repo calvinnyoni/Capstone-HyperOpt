@@ -25,7 +25,6 @@ RUN rm *.zip
 WORKDIR /CarlSAT_2021-main/
 RUN make clean && make
 
-
 # Fork a new image from the base...
 FROM base AS exec
 # Add the CarlSAT program

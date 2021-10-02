@@ -1,7 +1,9 @@
-import db_adapter
+from db_adapter import CarlSATDB
 
-print("Attempting connection")
+print("Starting test")
 
-carlsat_db = db_adapter.CarlSATDB()
+test_con = CarlSATDB()
 
-print("Connected successfully")
+test_con.create_ancestor_table()
+
+test_con.disconnect()

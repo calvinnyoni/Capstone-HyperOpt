@@ -10,7 +10,9 @@ class CarlSATDB(object):
         self.config = {'user': 'carlsat', 'password': '12345678', 'host':'localhost', 'database': 'CarlSAT_DB'}
 
     def connect(self):
+        inform('Initiating connection')
         self.connection = mysql.connector.connect(**self.config)
+        inform('Connected to server')
 
     def send_query(self, query, *args):
         """
@@ -42,37 +44,50 @@ class CarlSATDB(object):
             inform('Rolling back transaction')
             self.connection.rollback()
 
+    def create_ancestor_table(self):
+        inform('Attempting to create table')
+        try:
+            self.send_query("CREATE TABLE Ancestry (RunID INT NOT NULL, Random NVARCHAR(15), PRIMARY KEY (RunID))")
+            inform('Table created')
+        except:
+            inform('Error creating Ancestry table in CarlSAT_DB')
+
     def disconnect(self):
+        inform('Ending connection')
         self.connection.close()
+        inform('Disconnected from server')
 
 
-def create_database():
-    # set up connection to MySQL service
-    inform('Connecting to CarlSAT_DB')
-    carlsat_db = CarlSATDB()
-    carlsat_db.send_query('CREATE DATABASE IF NOT EXISTS CarlSAT_DB')
-    carlsat_db.send_query('USE CarlSAT_DB')
-    inform('Database connection established')
+# def create_table():
+#     # set up connection to MySQL service
+#     inform('Connecting to CarlSAT_DB')
+#     carlsat_db = CarlSATDB()
+#     # carlsat_db.send_query('CREATE DATABASE IF NOT EXISTS CarlSAT_DB')
+#     # carlsat_db.send_query('USE CarlSAT_DB')
+#     inform('Database connection established')
 
-    # create table
-    table = """
-            CREATE TABLE IF NOT EXISTS Ancestry (
-                RunID INT NOT NULL,
-                Random NVARCHAR(15),
-                CONSTRAINT PK_Ancestry PRIMARY_KEY (RunID) ORDER BY RunID,
-            );
-            """
-    carlsat_db.send_query(table)
+#     # create table
+#     inform('Creating table')
+#     table = """
+#             CREATE TABLE IF NOT EXISTS Ancestry (
+#                 RunID INT NOT NULL,
+#                 Random NVARCHAR(15),
+#                 CONSTRAINT PK_Ancestry PRIMARY_KEY (RunID) ORDER BY RunID,
+#             );
+#             """
+#     carlsat_db.send_query(table)
+
+#     inform('Disconntecting')
+#     carlsat_db.disconnect()
+#     inform('Done')
 
 
-def read_database():
-    pass
+# def read_database():
+#     pass
 
 
-def write_to_database():
-    pass
-
+# def write_to_database():
+#     pass
 
 if '__name__' != '__main__':
     pass
-#create_database()
