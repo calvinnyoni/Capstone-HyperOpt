@@ -1,0 +1,2 @@
+CREATE USER 'carlsat'@'localhost' IDENTIFIED BY '12345678';
+GRANT ALL ON CarlSAT_DB.* TO 'carlsat'@'localhost';
